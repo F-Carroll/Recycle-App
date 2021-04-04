@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
 import ListItems from "./ListItems";
-import { v4 as uuidv4 } from "uuid";
 
 const Dropdown = () => {
   const [selected, setSelected] = React.useState("");
@@ -43,10 +42,12 @@ const Dropdown = () => {
     <Fragment>
       <form>
         <div>
-          <select id="selectid"  onChange={changeSelectOptionHandler}>
+          <select id="selectid" onChange={changeSelectOptionHandler}>
             <option>Choose Location...</option>
             {locations.map((loc) => (
-              <option key={loc.location_id} type={loc.location_materials}>{loc.location_name}</option>
+              <option key={loc.location_id} type={loc.location_materials}>
+                {loc.location_name}
+              </option>
             ))}
           </select>
         </div>

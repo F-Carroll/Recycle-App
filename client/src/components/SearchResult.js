@@ -74,7 +74,7 @@ const SearchResult = (props) => {
   <Container w="100%" textAlign="center">
     <Center mb="3px">
     <Tooltip hasArrow label="Not Recyclable" color="white" placement="top">
-    <svg height="35px" className="w-6 h-6" fill="none" stroke="#E65C32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <svg height="35px" className="w-6 h-6" fill="none" stroke="#E65C32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinejoin="round" strokeLinejoin="round" strokeWidth="1.4" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
     </Tooltip>
     </Center>
         <RenderList items={WasteList}/>

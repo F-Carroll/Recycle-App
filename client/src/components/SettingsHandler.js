@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setSelectedLocation } from "../actions";
-import { Select } from "@chakra-ui/react";
-const LocationSelector = () => {
+const SettingsHandler = () => {
   const [selected, setSelected] = useState("");
   const [locations, setLocations] = useState([]);
   const dispatch = useDispatch();
@@ -26,9 +25,6 @@ const LocationSelector = () => {
     }
   }, []);
 
-  const changeSelectOptionHandler = (event) => {
-    setSelected(event.target.value);
-  };
 
   let type = null;
 
@@ -49,29 +45,8 @@ const LocationSelector = () => {
     options = type;
   }
 
-  return (
-    <>
-      <form>
-        <div>
-          <Select
-            id="dropdown"
-            w="160px"
-            variant="filled"
-            placeholder="Choose..."
-            onChange={changeSelectOptionHandler}
-            value={selected}
-            textOverflow="ellipsis"
-          >
-            {locations.map((loc) => (
-              <option key={loc.location_id} type={loc.location_materials}>
-                {loc.location_name}
-              </option>
-            ))}
-          </Select>
-        </div>
-      </form>
-    </>
-  );
+ //check for location change
+return null
 };
 
-export default LocationSelector;
+export default SettingsHandler;

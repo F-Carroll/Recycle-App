@@ -1,30 +1,42 @@
 import * as React from "react";
 import "./App.css";
-import { ChakraProvider, theme } from "@chakra-ui/react";
+import { ChakraProvider, theme} from "@chakra-ui/react";
+import { BrowserRouter as Router, Route} from "react-router-dom";
 
 //Components
-import InputTodo from "./components/InputTodo";
-import Dropdown from "./components/Dropdown";
 import Navbar from "./components/Navbar";
-import ListItems from "./components/ListItems";
-import {useSelector} from 'react-redux';
 import SearchInput from "./components/SearchInput";
 import SearchResult from "./components/SearchResult";
-import LocationSelector from "./components/LocationSelector";
-
+import Settings from "./components/Settings"
+import SettingsHandler from "./components/SettingsHandler"
 
 function App() {
-  const counter = useSelector(state => state.counter)
-  const query = useSelector(state => state.query)
   
   return (
     <ChakraProvider theme={theme}>
-          <div className="container">
-            <Navbar />
+      <Router>
+         <Route exact path="/">
+           <Navbar />
            <SearchInput/>
            <SearchResult/>
+           <SettingsHandler/>
+           </Route>
+
+         <Route path="/settings">
+           <Settings/>
+         </Route>
+
+         <Route path="/add/item">
+           <h1>add item</h1>
+         </Route>
+
+         <Route path="/add/location">
+           <h1>add location</h1>
+         </Route>
+            
            
-          </div>
+                       
+  </Router>
     </ChakraProvider>
   );
 }
