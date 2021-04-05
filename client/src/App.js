@@ -5,10 +5,10 @@ import { BrowserRouter as Router, Route} from "react-router-dom";
 
 //Components
 import Navbar from "./components/Navbar";
-import SearchInput from "./components/SearchInput";
 import SearchResult from "./components/SearchResult";
 import Settings from "./components/Settings"
 import SettingsHandler from "./components/SettingsHandler"
+import AddItem from "./components/AddItem";
 
 function App() {
   
@@ -17,7 +17,7 @@ function App() {
       <Router>
          <Route exact path="/">
            <Navbar />
-           <SearchInput/>
+           
            <SearchResult/>
            <SettingsHandler/>
            </Route>
@@ -27,7 +27,7 @@ function App() {
          </Route>
 
          <Route path="/add/item">
-           <h1>add item</h1>
+           <AddItem/>
          </Route>
 
          <Route path="/add/location">
