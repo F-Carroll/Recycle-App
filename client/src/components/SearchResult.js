@@ -4,6 +4,7 @@ import Fuse from "fuse.js";
 import { useDispatch, useSelector } from "react-redux";
 import { setItems } from "../actions";
 import { Box, Text, Container, Center, Wrap, WrapItem, Tooltip } from "@chakra-ui/react";
+import moment from 'moment'
 
 const SearchResult = (props) => {
   const dispatch = useDispatch();
@@ -84,7 +85,9 @@ const SearchResult = (props) => {
     </Container>
   </WrapItem>
 </Wrap>
-<p>Last updated: {item.record_date.split("T00:00:00.000Z")}</p>
+<Tooltip hasArrow label={moment(item.record_date).format("Do MMM YYYY [at] H:MM")} color="white" bg="gray.700" fontSize="9px" >
+<Text color="gray.400" fontSize="14px" mt="10px" width="fit-content" >Updated {moment(item.record_date).fromNow()}</Text>
+</Tooltip>
 </Box>
         
         );

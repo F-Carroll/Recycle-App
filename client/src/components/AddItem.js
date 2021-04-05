@@ -44,7 +44,7 @@ export default function AddItem() {
       e.preventDefault();
         try {
             const body = {product_name, barcode, items}
-            const response = await fetch("http://localhost:5000/api/items", {
+            await fetch("http://localhost:5000/api/items", {
                 method:'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(body)
