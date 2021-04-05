@@ -1,8 +1,7 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {
   Flex,
   Center,
-  Spacer,
   Button,
   Modal,
   ModalOverlay,
@@ -17,7 +16,7 @@ import {
   Text,
   Link,
 } from "@chakra-ui/react";
-import LocationSelector from "./LocationSelector";
+import SearchInput from "./SearchInput";
 
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -347,8 +346,11 @@ function openSettings() {
             Logo
           </Button>
         </Center>
+<Center w="100%">
+  <SearchInput/>
+</Center>
 
-        <Spacer />
+      
         
         <Center>
           <Button ml="10px" p="0" onClick={onOpen}>

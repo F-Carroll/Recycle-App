@@ -39,7 +39,7 @@ const LocationSelector = () => {
     localStorage.setItem("current selected location", JSON.stringify(selected));
   });
 
-  locations.map((loc) => {
+  locations.forEach((loc) => {
     if (selected === loc.location_name) {
       type = loc.location_materials;
     }

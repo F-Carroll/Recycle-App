@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Fuse from "fuse.js";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,21 +11,26 @@ const SearchResult = (props) => {
   const items = useSelector((state) => state.items);
   const selectedLocation = useSelector((state) => state.selectedLocation);
 
-  const getItems = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/api/items");
-      const jsonData = await response.json();
 
-      dispatch(setItems(jsonData));
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
+  
+  
 
+  
   useEffect(() => {
+    const getItems = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/items");
+        const jsonData = await response.json();
+  
+        dispatch(setItems(jsonData));
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+  
     getItems();
     // document.getElementById("search").focus();
-  }, []);
+  },[dispatch]);
 
   const fuse = new Fuse(items, {
     keys: ["barcode", "product_name"],
@@ -37,8 +42,6 @@ const SearchResult = (props) => {
   const itemResults = query ? results.map((result) => result.item) : items;
 
   var arr2 = selectedLocation[0];
-
-  console.log(arr2);
 
   function RenderList({ items }) {
     if (items?.length) {
@@ -74,7 +77,7 @@ const SearchResult = (props) => {
   <Container w="100%" textAlign="center">
     <Center mb="3px">
     <Tooltip hasArrow label="Not Recyclable" color="white" placement="top">
-    <svg height="35px" className="w-6 h-6" fill="none" stroke="#E65C32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinejoin="round" strokeLinejoin="round" strokeWidth="1.4" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <svg height="35px" className="w-6 h-6" fill="none" stroke="#E65C32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinejoin="round" strokeWidth="1.4" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
     </Tooltip>
     </Center>
         <RenderList items={WasteList}/>

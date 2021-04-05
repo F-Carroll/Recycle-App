@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setSelectedLocation } from "../actions";
 const SettingsHandler = () => {
@@ -35,9 +35,9 @@ const SettingsHandler = () => {
     localStorage.setItem("current selected location", JSON.stringify(selected));
   });
 
-  locations.map((loc) => {
+  locations.forEach((loc) => {
     if (selected === loc.location_name) {
-      type = loc.location_materials;
+     type = loc.location_materials;
     }
   });
 
