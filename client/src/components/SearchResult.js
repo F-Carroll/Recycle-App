@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Fuse from "fuse.js";
 import { useDispatch, useSelector } from "react-redux";
 import { setItems } from "../actions";
-import { Box, Text, Container, Center, Wrap, WrapItem, Tooltip } from "@chakra-ui/react";
+import { Box, Text, Container, Center, Wrap, WrapItem, Tooltip, Alert, AlertIcon, CloseButton } from "@chakra-ui/react";
 import moment from 'moment'
 
 const SearchResult = (props) => {
@@ -12,10 +12,18 @@ const SearchResult = (props) => {
   const items = useSelector((state) => state.items);
   const selectedLocation = useSelector((state) => state.selectedLocation);
 
-
+  const [infoOpen, setInfoOpen] = useState(true);
   
-  
+  function Capitalize(string) {
+    const input = string.toLowerCase();
+    const words = input.split(" ");
 
+for (let i = 0; i < words.length; i++) {
+    words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+}
+
+return words.join(" ")
+  }
   
   useEffect(() => {
     const getItems = async () => {
@@ -46,7 +54,7 @@ const SearchResult = (props) => {
 
   function RenderList({ items }) {
     if (items?.length) {
-      return items.map((item) => <p key={uuidv4()}>{item}</p>);
+      return items.map((item) => <p key={uuidv4()}>{Capitalize(item)}</p>);
     } else {
       return <Center h="60%" color="gray.500">No items</Center>
     }
@@ -85,8 +93,8 @@ const SearchResult = (props) => {
     </Container>
   </WrapItem>
 </Wrap>
-<Tooltip hasArrow label={moment(item.record_date).format("Do MMM YYYY [at] H:MM")} color="white" bg="gray.700" fontSize="9px" >
-<Text color="gray.400" fontSize="14px" mt="10px" width="fit-content" >Updated {moment(item.record_date).fromNow()}</Text>
+<Tooltip hasArrow label={moment(item.record_date).format("Do MMM YYYY [at] hh:mm A")} color="white" bg="gray.700" fontSize="9px" >
+<Text color="gray.400" fontSize="14px" mt="10px" width="fit-content" >Edited {moment(item.record_date).fromNow()}</Text>
 </Tooltip>
 </Box>
         

@@ -11,17 +11,32 @@ import {
 } from "@chakra-ui/react";
 import { CloseIcon, InfoIcon } from "@chakra-ui/icons";
 import Select from "react-select";
+import options from "../options.json"
 
 export default function AddItem() {
-  const [product_name, setProduct_Name] = useState("");
+  const [product_name, setProduct_Name] = useState("".toLowerCase());
   const [barcode, setBarcode] = useState("");
   const [materials, setMaterials] = useState([]);
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
+  function Capitalize(string) {
+    const input = string.toLowerCase();
+    const words = input.split(" ");
+
+for (let i = 0; i < words.length; i++) {
+    words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+}
+
+return words.join(" ")
+  }
+
+  const parsedOptions = []
+  
+    options.optionsList.forEach((option) => {
+  parsedOptions.push(({value: option, label: Capitalize(option)}))
+  })
+
+  console.log(parsedOptions)
+
 
   function customTheme(theme) {
     return {
@@ -124,7 +139,7 @@ export default function AddItem() {
             <Select
               theme={customTheme}
               closeMenuOnSelect={false}
-              options={options}
+              options={parsedOptions}
               onChange={setMaterials}
               isMulti
               autoFocus

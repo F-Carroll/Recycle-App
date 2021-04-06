@@ -9,6 +9,7 @@ import SearchResult from "./components/SearchResult";
 import Settings from "./components/Settings"
 import SettingsHandler from "./components/SettingsHandler"
 import AddItem from "./components/AddItem";
+import AddLocation from "./components/AddLocation";
 
 function App() {
   
@@ -31,7 +32,7 @@ function App() {
          </Route>
 
          <Route path="/add/location">
-           <h1>add location</h1>
+           <AddLocation/>
          </Route>
             
            
