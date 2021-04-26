@@ -16,7 +16,6 @@ app.post("/api/items", async (req, res) => {
         const barcode = req.body.barcode;
         const product_name = req.body.product_name;
         const items = req.body.items;
-        const updated = new Date()
         const newProduct = await pool.query(
             "INSERT INTO products (barcode, product_name, items) VALUES($1,$2,$3) RETURNING *",
             [barcode,product_name,items]
@@ -39,7 +38,7 @@ app.get("/api/items", async(req, res) =>{
 
 
 //get an item
-app.get("/api/items/:id", async (req, res) => {
+app.get("/api/items/id/:id", async (req, res) => {
     try {
         const {id} = req.params;
         const product = await pool.query("SELECT * FROM products WHERE product_id = $1",
