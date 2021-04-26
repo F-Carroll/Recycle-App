@@ -9,10 +9,10 @@ CREATE DATABASE recycleapp;
 
 CREATE TABLE products(
     product_id SERIAL PRIMARY KEY,
-    barcode VARCHAR(13),
-    product_name VARCHAR(100),
+    barcode VARCHAR(13) UNIQUE,
+    product_name VARCHAR(100) UNIQUE,
     items TEXT[],
-    record_date DATE NOT NULL DEFAULT CURRENT_DATE
+    record_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE locations(

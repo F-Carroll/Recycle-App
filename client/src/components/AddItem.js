@@ -1,159 +1,178 @@
-import React, { useState } from "react";
-import {
-  Button,
-  Center,
-  Container,
-  Flex,
-  Spacer,
-  Text,
-  Input,
-  Tooltip,
-} from "@chakra-ui/react";
-import { CloseIcon, InfoIcon } from "@chakra-ui/icons";
+import React from "react";
+import {withFormik } from "formik";
+import * as Yup from "yup";
+import options from "../options.json";
 import Select from "react-select";
-import options from "../options.json"
 
 export default function AddItem() {
-  const [product_name, setProduct_Name] = useState("".toLowerCase());
-  const [barcode, setBarcode] = useState("");
-  const [materials, setMaterials] = useState([]);
+ 
+
+  const selectoptions = []
 
   function Capitalize(string) {
     const input = string.toLowerCase();
     const words = input.split(" ");
 
-for (let i = 0; i < words.length; i++) {
-    words[i] = words[i][0].toUpperCase() + words[i].substr(1);
-}
+    for (let i = 0; i < words.length; i++) {
+      words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+    }
 
-return words.join(" ")
+    return words.join(" ");
   }
 
-  const parsedOptions = []
-  
-    options.optionsList.forEach((option) => {
-  parsedOptions.push(({value: option, label: Capitalize(option)}))
-  })
+  options.optionsList.forEach((option) => {
+    selectoptions.push({ value: option, label: Capitalize(option) });
+  });
 
-  console.log(parsedOptions)
+  const formikEnhancer = withFormik({
+    validationSchema: Yup.object().shape({
+      productname: Yup.string()
+      .min(3, "Product name is too short")
+      .max(100, "Product name is too long")
+      .required("Required"),
 
+      barcode: Yup.string()
+      .length(13, "Invalid Barcode")
+      .required("Required"),
 
-  function customTheme(theme) {
-    return {
-      ...theme,
-      colors: {
-        ...theme.colors,
-        primary: "none",
-        neutral20: "#E2E8F0",
-        neutral30: "#CBD5E0",
-        neutral50: "#A0AEC0",
-        primary25: "#EFF2F5",
-        primary50: "#DFE5EC",
-      },
-    };
-  }
+            select: Yup.array().required('Required').min(1, 'Required').nullable()
+    }),
+    mapPropsToValues: () => ({
+      productname: "",
+      barcode: "",
+      select: null
+    }),
+    handleSubmit: async (values, { setSubmitting }) => {
+   
+      const payload = {
+        product_name: values.productname,
+        barcode: values.barcode,
+        items: values.select.map((select) => {
+          return select.value
+        })
+      };
+      try {  
+          await fetch("http://localhost:5000/api/items", {
+              method:'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify(payload)
+          });
+          window.location = "/";
+      } catch (error) {
+          console.error(error.message)
+          console.log('here')
+      }  
 
-  const items = materials.map((item) => item.label);
+      setTimeout(() => {
+        alert(JSON.stringify(payload, null, 2));
+        setSubmitting(false);
+      }, 1000);
+    },
+    displayName: "MyForm"
+  });
 
-  const onSubmitForm = async (e) => {
-      e.preventDefault();
-        try {
-            const body = {product_name, barcode, items}
-            await fetch("http://localhost:5000/api/items", {
-                method:'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(body)
+  const MyForm = (props) => {
+    const {
+      values,
+      touched,
+      dirty,
+      errors,
+      handleChange,
+      handleBlur,
+      handleSubmit,
+      handleReset,
+      setFieldValue,
+      setFieldTouched,
+      isSubmitting
+    } = props;
+    return (
+      <form onSubmit={handleSubmit}>
+        <input
+          id="productname"
+          type="text"
+          placeholder="Enter Product Name"
+          value={values.productname}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+        {errors.productname && touched.productname && (
+          <div style={{ color: "red", marginTop: ".5rem" }}>{errors.productname}</div>
+        )}
 
-                
-            });
-            window.location = "/";
-        } catch (error) {
-            console.error(error.message)
-        }  
-  }
+        <input
+          id="barcode"
+          type="number"
+          placeholder="Enter barcode"
+          value={values.barcode}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+        {errors.barcode && touched.barcode && (
+          <div id="barcode-err"style={{ color: "red", marginTop: ".5rem" }}>{errors.barcode}</div>
+        )}
+        <MySelect
+          value={values.select}
+          onChange={setFieldValue}
+          onBlur={setFieldTouched}
+          error={errors.select}
+          touched={touched.select}
+        />
 
-  function handleClose() {
-    window.location = "/";
-  }
-
-  const NameInputHandler = (event) => {
-    setProduct_Name(event.target.value)
-  }
-  const BarcodeInputHandler = (event) => {
-    setBarcode(event.target.value)
-  }
- 
-
-  return (
-    <div>
-      <Flex>
-        <Text
-          fontSize="30px"
-          m="20px"
-          p="5px"
-          px="18px"
-          borderBottomWidth="3.5px"
-          borderColor="#39F969"
+{touched.select && errors.select ? errors.select  &&
+ <div style={{ color: "red", marginTop: ".5rem" }}>{errors.select}</div>
+: '' }
+              
+                <button
+          type="button"
+          className="outline"
+          onClick={handleReset}
+          disabled={!dirty || isSubmitting}
         >
-          Add Product
-        </Text>
-        <Spacer />
-        <Center>
-          <Button mr="30px" p="0" onClick={handleClose}>
-            <CloseIcon />
-          </Button>
-        </Center>
-      </Flex>
-      <form onSubmit={onSubmitForm}>
-          <Container mt="40px" height="60vw">
-        <Flex>
-          <Center>
-            <Text>Product Name:</Text>
-          </Center>
-          <Spacer />
-          <Input type="text" w="230px" placeholder="Enter Product Name" autoComplete="off" onChange={NameInputHandler}/>
-        </Flex>
-        <Flex mt="20px">
-          <Center>
-            <Text>Barcode:</Text>
-          </Center>
-          <Spacer />
-          <Input id="barcode-input"type="text" w="230px" placeholder="Enter Barcode" autoComplete="off" onChange={BarcodeInputHandler} />
-        </Flex>
-        <Flex mt="20px" h="40vh">
-          <Text>
-            Select Materials:
-            <Tooltip
-              m="5px"
-              hasArrow
-              label="Select all the materials make up this product, e.g. Cardboard, Foil, etc..."
-              bg="gray.100"
-              color="black"
-            >
-              <InfoIcon h="10px" mb="15px" />
-            </Tooltip>
-          </Text>
-
-          <Spacer />
-          <Container w="230px" px="0">
-            <Select
-              theme={customTheme}
-              closeMenuOnSelect={false}
-              options={parsedOptions}
-              onChange={setMaterials}
-              isMulti
-              autoFocus
-              isSearchable
-              placeholder="Select Materials"
-            />
-          </Container>
-        </Flex>
-        <Center>
-          <Button type="submit" colorScheme="blue">Submit</Button>
-        </Center>
-      </Container>
+          Reset
+        </button>
+        <button type="submit" disabled={isSubmitting}>
+          Submit
+        </button>
+  
+        
       </form>
-      
-    </div>
+    );
+  };
+  
+  
+  class MySelect extends React.Component {
+    handleChange = (value) => {
+      this.props.onChange("select", value);
+    };
+  
+    handleBlur = () => {
+      this.props.onBlur("select", true);
+    };
+  
+    render() {
+      return (
+        <div style={{ margin: "1rem 0" }}>
+          <label htmlFor="color">select</label>
+          <Select
+            id="color"
+            options={selectoptions}
+            onChange={this.handleChange}
+            onBlur={this.handleBlur}
+            value={this.props.value}
+            isMulti
+            backspaceRemovesValue
+            closeMenuOnSelect={false}
+          />
+        </div>
+      );
+    }
+  }
+  
+  const MyEnhancedForm = formikEnhancer(MyForm);
+  
+  return (
+    <>
+      <MyEnhancedForm />
+    </>
   );
 }
