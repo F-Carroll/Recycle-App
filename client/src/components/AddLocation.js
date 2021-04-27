@@ -1,11 +1,12 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 import {withFormik } from "formik";
 import * as Yup from "yup";
 import options from "../options.json";
 import Select from "react-select";
 
 export default function AddLocation() {
-  
+  const [items, setItems] = useState([])
+  const [existingLocation, setexistingLocation] = useState([])
 
   const selectoptions = []
 
@@ -24,11 +25,29 @@ export default function AddLocation() {
     selectoptions.push({ value: option, label: Capitalize(option) });
   });
 
+  const getItems = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/locations");
+      const jsonData = await response.json();
+      setItems(jsonData);
+
+      setexistingLocation(jsonData.map((item) => {return item.location_name}))
+ 
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getItems();
+  }, []);
+
   const formikEnhancer = withFormik({
     validationSchema: Yup.object().shape({
       locationname: Yup.string()
-      .min(3, "Product name is too short")
-      .max(100, "Product name is too long")
+      .min(3, "Location name is too short")
+      .max(100, "Location name is too long")
+      .notOneOf(existingLocation, "This location already exists")
       .required("Required"),
 
             select: Yup.array().required('Required').min(1, 'Required').nullable()

@@ -1,11 +1,13 @@
-import React from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {withFormik } from "formik";
 import * as Yup from "yup";
 import options from "../options.json";
 import Select from "react-select";
 
 export default function AddItem() {
- 
+  const [items, setItems] = useState()
+ const [existingBarcodes, setexistingBarcodes] = useState([])
+ const [existingProducts, setexistingProducts] = useState([])
 
   const selectoptions = []
 
@@ -24,15 +26,35 @@ export default function AddItem() {
     selectoptions.push({ value: option, label: Capitalize(option) });
   });
 
+  const getItems = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/items");
+      const jsonData = await response.json();
+      setItems(jsonData);
+
+      setexistingBarcodes(jsonData.map((item) => {return item.barcode}))
+      setexistingProducts(jsonData.map((item) => {return item.product_name}))
+ 
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getItems();
+  }, []);
+
   const formikEnhancer = withFormik({
     validationSchema: Yup.object().shape({
       productname: Yup.string()
       .min(3, "Product name is too short")
       .max(100, "Product name is too long")
+      .notOneOf(existingProducts, 'This product already exists')
       .required("Required"),
 
       barcode: Yup.string()
       .length(13, "Invalid Barcode")
+      .notOneOf(existingBarcodes, 'This barcode is taken')
       .required("Required"),
 
             select: Yup.array().required('Required').min(1, 'Required').nullable()
@@ -60,7 +82,6 @@ export default function AddItem() {
           window.location = "/";
       } catch (error) {
           console.error(error.message)
-          console.log('here')
       }  
 
       setTimeout(() => {
