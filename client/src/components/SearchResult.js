@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Fuse from "fuse.js";
 import { useDispatch, useSelector } from "react-redux";
 import { setItems } from "../actions";
-import { Box, Text, Container, Center, Wrap, WrapItem, Tooltip, Alert, AlertIcon, CloseButton } from "@chakra-ui/react";
+import { Box, Text, Container, Center, Wrap, WrapItem, Tooltip} from "@chakra-ui/react";
 import moment from 'moment'
 
 const SearchResult = (props) => {
@@ -11,8 +11,6 @@ const SearchResult = (props) => {
   const query = useSelector((state) => state.query);
   const items = useSelector((state) => state.items);
   const selectedLocation = useSelector((state) => state.selectedLocation);
-
-  const [infoOpen, setInfoOpen] = useState(true);
   
   function Capitalize(string) {
     const input = string.toLowerCase();
