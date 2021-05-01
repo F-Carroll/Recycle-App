@@ -26,6 +26,17 @@ module.exports = {
       indigo: colors.indigo,
       purple: colors.violet,
       pink: colors.pink,
+
+      primary: {
+        green: '#60D394',
+        red: '#EE6055',
+        blue: '#3D76E1',
+        hoverblue: '#2B6ADE',
+        disabledblue: '#1C50B0',
+        yellow: '#FFC15E',
+        purple: '#7F7EFF',
+        black: '#3A2E39'
+      }
     },
     spacing: {
       px: '1px',
@@ -422,6 +433,17 @@ module.exports = {
       '3/6': '50%',
       '4/6': '66.666667%',
       '5/6': '83.333333%',
+      '1/12': '8.333333%',
+      '2/12': '16.666666%',
+      '3/12': '25%',
+      '4/12': '33.333333%',
+      '5/12': '41.666666%',
+      '6/12': '50%',
+      '7/12': '58.333333%',
+      '8/12': '66.666666%',
+      '9/12': '75%',
+      '10/12': '83.333333%',
+      '11/12': '91.666666%',
       full: '100%',
       screen: '100vh',
       screen90: '90vh',
