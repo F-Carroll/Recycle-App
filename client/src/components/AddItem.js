@@ -133,9 +133,9 @@ export default function AddItem() {
     return (
       <div className="h-screen80 relative">
         <div className="flex flex-row justify-between">
-          <h1 className="text-4xl p-7 font-semibold">Add Item</h1>
+          <h1 className="text-4xl p-5 font-semibold">Add Item</h1>
           <button
-            className="self-center p-3 mr-6 bg-gray-200 rounded-md hover:bg-gray-300"
+            className="self-center p-2 mr-6 bg-gray-200 rounded-md hover:bg-gray-300"
             onClick={handleClose}
           >
             <svg
@@ -156,11 +156,11 @@ export default function AddItem() {
         </div>
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col items-center "
+          className="flex flex-col items-center mt-5"
         >
           <div className="w-2/3 sm:w-2/5 m-2.5 h-20">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1.5"
+              className="block uppercase tracking-wide text-primary-black text-xs font-bold mb-1.5"
             >
               Product Name
             </label>
@@ -183,7 +183,7 @@ export default function AddItem() {
 
           <div className="w-2/3 sm:w-2/5 m-2.5 h-20">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1.5"
+              className="block uppercase tracking-wide text-primary-black text-xs font-bold mb-1.5"
             >
               Barcode
             </label>
@@ -203,7 +203,7 @@ export default function AddItem() {
           </div>
           <div className="w-2/3 sm:w-2/5 m-2.5 h-20">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1.5"
+              className="block uppercase tracking-wide text-primary-black text-xs font-bold mb-1.5"
             >
               Materials
             </label>
@@ -224,7 +224,7 @@ export default function AddItem() {
           </div>
           <div className="w-full absolute bottom-0 text-center">
             <button
-              className="transition duration-300  ease-in-out w-2/3 self-center sm:w-2/5 bg-blue-500 p-2 rounded-md text-base font-semibold text-white hover:bg-blue-600 disabled:bg-blue-900"
+              className="transition duration-300  ease-in-out w-2/3 self-center sm:w-2/5 bg-primary-blue p-2 rounded-md text-base font-semibold text-white focus:bg-primary-hoverblue"
               type="submit"
               disabled={isSubmitting}
             >
