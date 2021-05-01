@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setSelectedLocation } from "../actions";
-import { Select } from "@chakra-ui/react";
+
 const LocationSelector = () => {
   const [selected, setSelected] = useState("");
   const [locations, setLocations] = useState([]);
@@ -51,25 +51,31 @@ const LocationSelector = () => {
 
   return (
     <>
-      <form>
-        <div>
-          <Select
-            id="dropdown"
-            w="160px"
-            variant="filled"
-            placeholder="Choose..."
-            onChange={changeSelectOptionHandler}
-            value={selected}
-            textOverflow="ellipsis"
-          >
-            {locations.map((loc) => (
-              <option key={loc.location_id} type={loc.location_materials}>
-                {loc.location_name}
-              </option>
-            ))}
-          </Select>
-        </div>
-      </form>
+      <div className="relative inline-flex w-full">
+        <svg
+          className="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 412 232"
+        >
+          <path
+            d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z"
+            fill="#648299"
+            fill-rule="nonzero"
+          />
+        </svg>
+        <select
+          className="pr-5 bg-gray-100 appearance-none border-2 rounded-md w-full border-gray-100 p-2 leading-tight truncate focus:outline-none focus:bg-white focus:border-gray-300"
+          placeholder="Choose..."
+          onChange={changeSelectOptionHandler}
+          value={selected}
+        >
+          {locations.map((loc) => (
+            <option key={loc.location_id} type={loc.location_materials}>
+              {loc.location_name}
+            </option>
+          ))}
+        </select>
+      </div>
     </>
   );
 };
