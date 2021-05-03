@@ -1,6 +1,5 @@
 import * as React from "react";
 import "./assets/main.css";
-import { ChakraProvider, theme} from "@chakra-ui/react";
 import { BrowserRouter as Router, Route} from "react-router-dom";
 
 //Components
@@ -14,7 +13,6 @@ import AddLocation from "./components/AddLocation";
 function App() {
   
   return (
-    <ChakraProvider theme={theme}>
       <Router>
          <Route exact path="/">
            <Navbar />
@@ -35,10 +33,9 @@ function App() {
            <AddLocation/>
          </Route>
             
-           
+          
                        
   </Router>
-    </ChakraProvider>
   );
 }
 

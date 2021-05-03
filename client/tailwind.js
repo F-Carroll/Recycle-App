@@ -32,10 +32,10 @@ module.exports = {
         red: '#EE6055',
         blue: '#3D76E1',
         hoverblue: '#2B6ADE',
-        disabledblue: '#1C50B0',
         yellow: '#FFC15E',
         purple: '#7F7EFF',
-        black: '#3A2E39'
+        black: '#3A2E39',
+        darkgreen: '#69C07B'
       }
     },
     spacing: {
@@ -455,6 +455,8 @@ module.exports = {
       screen30: '30vh',
       screen20: '20vh',
       screen10: '10vh',
+      width50: '50vw',
+      width35: '35vw',
     }),
     inset: (theme, { negative }) => ({
       auto: 'auto',
@@ -474,6 +476,7 @@ module.exports = {
       '-2/4': '-50%',
       '-3/4': '-75%',
       '-full': '-100%',
+      'primary': '-3%'
     }),
     keyframes: {
       spin: {

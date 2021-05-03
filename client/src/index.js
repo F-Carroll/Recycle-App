@@ -4,7 +4,6 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
-import { ChakraProvider } from "@chakra-ui/react";
 import { createStore } from "redux";
 import allReducer from "./reducers";
 import {Provider} from 'react-redux'
@@ -16,11 +15,9 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <ChakraProvider>
     <React.StrictMode>
       <App />
     </React.StrictMode>
-  </ChakraProvider>
   </Provider>,
   
   document.getElementById("root")
