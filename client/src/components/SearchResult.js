@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import Fuse from "fuse.js";
 import { useDispatch, useSelector } from "react-redux";
 import { setItems } from "../actions";
+import NoResult from './NoResult'
 
 const SearchResult = (props) => {
   const dispatch = useDispatch();
@@ -47,6 +48,11 @@ const SearchResult = (props) => {
 
   const itemResults = results.map((result) => result.item)
 
+
+  if (itemResults.length === 0 && query.length > 2) {
+    return <NoResult/>
+  }
+
   var arr2 = selectedLocation[0];
 
   function RenderList({ items }) {
@@ -68,7 +74,7 @@ const SearchResult = (props) => {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mt-1">
       {itemResults.map((item) => {
         const RecycleList = item.items.filter((item) => arr2.includes(item));
         const WasteList = item.items.filter((item) => !arr2.includes(item));
@@ -76,7 +82,7 @@ const SearchResult = (props) => {
         return (
           <div
             key={item.product_id}
-            className="bg-gray-100 w-11/12 md:w-3/5 my-3 p-2 self-center rounded-md border-t-4 border-primary-green "
+            className="bg-gray-100 w-11/12 md:w-2/5 my-3 p-2 self-center rounded-md border-t-4 border-primary-green "
           >
             <div className="h-3/12">
               <h1 className="pl-2 pt-1 text-xl font-semibold">

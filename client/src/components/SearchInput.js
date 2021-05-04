@@ -13,7 +13,7 @@ export default function SearchInput() {
 
   return (
     <>
-      <div className="w-4/5 sm:w-3/5 relative flex items-center  text-gray-400  focus-within:text-gray-700 transition duration-300 ease-in-out ">
+      <div className="w-3/5 sm:w-2/5 relative flex items-center  text-gray-400  focus-within:text-gray-700 transition duration-300 ease-in-out ">
         <input
         id="search"
           className="w-full bg-gray-100 p-2 rounded-md pl-10 focus:outline-none"
