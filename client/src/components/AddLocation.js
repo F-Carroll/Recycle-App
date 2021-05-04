@@ -127,6 +127,7 @@ export default function AddLocation() {
             className="self-center p-2 mr-6 bg-gray-200 rounded-md hover:bg-gray-300"
             onClick={handleClose}
           >
+            <p className="sr-only">Close</p>
             <svg
               className="w-6 h-6"
               fill="none"

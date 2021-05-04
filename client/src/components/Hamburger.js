@@ -9,6 +9,7 @@ export default function Hamburger() {
           <>
             <div>
               <Menu.Button className="inline-flex justify-center w-full p-2 text-sm font-medium text-black bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                <p className="sr-only">Menu</p>
                 <HamburgerIcon />
               </Menu.Button>
             </div>
