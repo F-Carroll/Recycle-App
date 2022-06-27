@@ -1,13 +1,13 @@
 import * as React from "react";
 import "./assets/main.css";
-import { BrowserRouter as Router, Route} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 //Components
 import Navbar from "./components/Navbar";
 import SearchResult from "./components/SearchResult";
-import Settings from "./components/Settings"
-import SettingsHandler from "./components/SettingsHandler"
+import Settings from "./components/Settings";
+import SettingsHandler from "./components/SettingsHandler";
 import AddItem from "./components/AddItem";
 import AddLocation from "./components/AddLocation";
 import LandingPage from "./components/LandingPage";
@@ -15,29 +15,28 @@ import LandingPage from "./components/LandingPage";
 function App() {
   const query = useSelector((state) => state.query);
   return (
-      <Router>
-         <Route exact path="/">
-           <Navbar />
-           {query ? null : <LandingPage/>}
-           <SearchResult/>
-           <SettingsHandler/>
-           </Route>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          exact
+          path="/"
+          element={
+            <div>
+              <Navbar />
+              {query ? null : <LandingPage />}
+              <SearchResult />
+              <SettingsHandler />
+            </div>
+          }
+        />
 
-         <Route path="/settings">
-           <Settings/>
-         </Route>
+        <Route path="/settings" element={<Settings />} />
 
-         <Route path="/add/item">
-           <AddItem/>
-         </Route>
+        <Route path="/add/item" element={<AddItem />} />
 
-         <Route path="/add/location">
-           <AddLocation/>
-         </Route>
-            
-          
-                       
-  </Router>
+        <Route path="/add/location" element={<AddLocation />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

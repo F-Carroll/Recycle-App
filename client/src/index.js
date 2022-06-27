@@ -1,26 +1,26 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import { createStore } from "redux";
 import allReducer from "./reducers";
-import {Provider} from 'react-redux'
+import { Provider } from "react-redux";
 
 const store = createStore(
   allReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-ReactDOM.render(
+const root = createRoot(document.getElementById("root"));
+
+root.render(
   <Provider store={store}>
     <React.StrictMode>
       <App />
     </React.StrictMode>
-  </Provider>,
-  
-  document.getElementById("root")
+  </Provider>
 );
 
 // If you want your app to work offline and load faster, you can change
