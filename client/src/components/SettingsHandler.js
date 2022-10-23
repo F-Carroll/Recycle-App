@@ -8,7 +8,9 @@ const SettingsHandler = () => {
 
   const getLocations = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/locations");
+      const response = await fetch(
+        "https://desolate-waters-26756.herokuapp.com/api/locations"
+      );
       const jsonData = await response.json();
 
       setLocations(jsonData);
@@ -19,12 +21,11 @@ const SettingsHandler = () => {
 
   useEffect(() => {
     getLocations();
-    const data = localStorage.getItem("current selected location");
+    const data = localStorage.getItem("current selected location"); //setting data to current localStorage which is nothing, therefore filter is set to nothing.
     if (data) {
       setSelected(JSON.parse(data));
     }
   }, []);
-
 
   let type = null;
 
@@ -32,12 +33,11 @@ const SettingsHandler = () => {
 
   useEffect(() => {
     dispatch(setSelectedLocation([options]));
-    localStorage.setItem("current selected location", JSON.stringify(selected));
   });
 
   locations.forEach((loc) => {
     if (selected === loc.location_name) {
-     type = loc.location_materials;
+      type = loc.location_materials;
     }
   });
 
@@ -45,8 +45,8 @@ const SettingsHandler = () => {
     options = type;
   }
 
- //check for location change
-return null
+  //check for location change
+  return null;
 };
 
 export default SettingsHandler;

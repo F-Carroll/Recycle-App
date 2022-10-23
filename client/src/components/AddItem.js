@@ -31,7 +31,9 @@ export default function AddItem() {
 
   const getItems = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/items");
+      const response = await fetch(
+        "https://desolate-waters-26756.herokuapp.com/api/items"
+      );
       const jsonData = await response.json();
 
       setexistingBarcodes(
@@ -82,7 +84,7 @@ export default function AddItem() {
         }),
       };
       try {
-        await fetch("http://localhost:5000/api/items", {
+        await fetch("https://desolate-waters-26756.herokuapp.com/api/items", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -93,7 +95,7 @@ export default function AddItem() {
       }
 
       setTimeout(() => {
-        alert('Timed Out');
+        alert("Timed Out");
         setSubmitting(false);
       }, 1000);
     },
@@ -110,9 +112,9 @@ export default function AddItem() {
       borderColor: "none",
       borderWidth: "2px",
       width: "100%",
-// eslint-disable-next-line
+      // eslint-disable-next-line
       borderColor: state.isFocused ? null : "#F3F4F6",
-// eslint-disable-next-line
+      // eslint-disable-next-line
       background: state.isFocused ? "white" : "transition #F3F4F6",
       boxShadow: state.isFocused ? null : null,
     }),
@@ -160,9 +162,7 @@ export default function AddItem() {
           className="flex flex-col items-center mt-5"
         >
           <div className="w-2/3 sm:w-2/5 m-2.5 h-20">
-            <label
-              className="block uppercase tracking-wide text-primary-black text-xs font-bold mb-1.5"
-            >
+            <label className="block uppercase tracking-wide text-primary-black text-xs font-bold mb-1.5">
               Product Name
             </label>
             <input
@@ -183,9 +183,7 @@ export default function AddItem() {
           </div>
 
           <div className="w-2/3 sm:w-2/5 m-2.5 h-20">
-            <label
-              className="block uppercase tracking-wide text-primary-black text-xs font-bold mb-1.5"
-            >
+            <label className="block uppercase tracking-wide text-primary-black text-xs font-bold mb-1.5">
               Barcode
             </label>
             <input
@@ -203,9 +201,7 @@ export default function AddItem() {
             )}
           </div>
           <div className="w-2/3 sm:w-2/5 m-2.5 h-20">
-            <label
-              className="block uppercase tracking-wide text-primary-black text-xs font-bold mb-1.5"
-            >
+            <label className="block uppercase tracking-wide text-primary-black text-xs font-bold mb-1.5">
               Materials
             </label>
             <MySelect

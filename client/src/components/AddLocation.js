@@ -30,7 +30,9 @@ export default function AddLocation() {
 
   const getItems = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/locations");
+      const response = await fetch(
+        "https://desolate-waters-26756.herokuapp.com/api/locations"
+      );
       const jsonData = await response.json();
 
       setexistingLocation(
@@ -69,18 +71,21 @@ export default function AddLocation() {
         }),
       };
       try {
-        await fetch("http://localhost:5000/api/locations", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
+        await fetch(
+          "https://desolate-waters-26756.herokuapp.com/api/locations",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          }
+        );
         window.location = "/";
       } catch (error) {
         console.error(error.message);
       }
 
       setTimeout(() => {
-        alert('Timed Out')
+        alert("Timed Out");
         setSubmitting(false);
       }, 1000);
     },
@@ -97,9 +102,9 @@ export default function AddLocation() {
       borderColor: "none",
       borderWidth: "2px",
       width: "100%",
-  // eslint-disable-next-line
+      // eslint-disable-next-line
       borderColor: state.isFocused ? null : "#F3F4F6",
-  // eslint-disable-next-line
+      // eslint-disable-next-line
       background: state.isFocused ? "white" : "transition #F3F4F6",
       boxShadow: state.isFocused ? null : null,
     }),
@@ -149,9 +154,7 @@ export default function AddLocation() {
           className="flex flex-col mt-5 items-center"
         >
           <div className="w-2/3 sm:w-2/5 m-2.5 h-20">
-            <label
-              className="block uppercase tracking-wide text-primary-black text-xs font-bold mb-1.5"
-            >
+            <label className="block uppercase tracking-wide text-primary-black text-xs font-bold mb-1.5">
               Location Name
             </label>
             <input
@@ -172,9 +175,7 @@ export default function AddLocation() {
           </div>
 
           <div className="w-2/3 sm:w-2/5 m-2.5 h-20 ">
-            <label
-              className="block uppercase tracking-wide text-primary-black text-xs font-bold mb-1.5"
-            >
+            <label className="block uppercase tracking-wide text-primary-black text-xs font-bold mb-1.5">
               Materials
             </label>
             <MySelect

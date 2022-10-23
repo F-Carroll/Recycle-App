@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import Fuse from "fuse.js";
 import { useDispatch, useSelector } from "react-redux";
 import { setItems } from "../actions";
-import NoResult from './NoResult'
+import NoResult from "./NoResult";
 
 const SearchResult = (props) => {
   const dispatch = useDispatch();
@@ -25,7 +25,9 @@ const SearchResult = (props) => {
   useEffect(() => {
     const getItems = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/items");
+        const response = await fetch(
+          "https://desolate-waters-26756.herokuapp.com/api/items"
+        );
         const jsonData = await response.json();
 
         dispatch(setItems(jsonData));
@@ -46,11 +48,10 @@ const SearchResult = (props) => {
 
   const results = fuse.search("'" + query);
 
-  const itemResults = results.map((result) => result.item)
-
+  const itemResults = results.map((result) => result.item);
 
   if (itemResults.length === 0 && query.length > 2) {
-    return <NoResult/>
+    return <NoResult />;
   }
 
   var arr2 = selectedLocation[0];
