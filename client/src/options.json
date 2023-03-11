@@ -1,7 +1,19 @@
 {
-    "optionsList": [
-        "Test",
-        "The",
-        "File"
-    ]
+  "optionsList": [
+    "Glass",
+    "Cardboard",
+    "Paper",
+    "Paper Wrap",
+    "Polyethylene Terephthalate (PET)",
+    "High-Density Polyethylene (HDPE)",
+    "Low-Density Polyethylene (LDPE)",
+    "Low-Density Polyethylene (LDPE)",
+    "Polyvinyl Chloride (PVC)",
+    "Polypropylene (PP)",
+    "Acrylonitrile butadiene styrene (ABS)",
+    "Aluminium",
+    "Aluminium Foil",
+    "Steel",
+    "Lithium Battery"
+  ]
 }

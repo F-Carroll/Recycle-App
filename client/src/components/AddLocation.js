@@ -9,19 +9,8 @@ export default function AddLocation() {
 
   const selectoptions = [];
 
-  function Capitalize(string) {
-    const input = string.toLowerCase();
-    const words = input.split(" ");
-
-    for (let i = 0; i < words.length; i++) {
-      words[i] = words[i][0].toUpperCase() + words[i].substr(1);
-    }
-
-    return words.join(" ");
-  }
-
   options.optionsList.forEach((option) => {
-    selectoptions.push({ value: option, label: Capitalize(option) });
+    selectoptions.push({ value: option, label: option });
   });
 
   function handleClose() {
@@ -30,9 +19,7 @@ export default function AddLocation() {
 
   const getItems = async () => {
     try {
-      const response = await fetch(
-        "https://desolate-waters-26756.herokuapp.com/api/locations"
-      );
+      const response = await fetch("http://localhost:5000/api/locations");
       const jsonData = await response.json();
 
       setexistingLocation(
@@ -71,14 +58,11 @@ export default function AddLocation() {
         }),
       };
       try {
-        await fetch(
-          "https://desolate-waters-26756.herokuapp.com/api/locations",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-          }
-        );
+        await fetch("http://localhost:5000/api/locations", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
         window.location = "/";
       } catch (error) {
         console.error(error.message);

@@ -10,19 +10,11 @@ export default function AddItem() {
 
   const selectoptions = [];
 
-  function Capitalize(string) {
-    const input = string.toLowerCase();
-    const words = input.split(" ");
-
-    for (let i = 0; i < words.length; i++) {
-      words[i] = words[i][0].toUpperCase() + words[i].substr(1);
-    }
-
-    return words.join(" ");
-  }
-
   options.optionsList.forEach((option) => {
-    selectoptions.push({ value: option, label: Capitalize(option) });
+    selectoptions.push({
+      value: option,
+      label: option,
+    });
   });
 
   function handleClose() {
@@ -31,9 +23,7 @@ export default function AddItem() {
 
   const getItems = async () => {
     try {
-      const response = await fetch(
-        "https://desolate-waters-26756.herokuapp.com/api/items"
-      );
+      const response = await fetch("http://localhost:5000/api/items");
       const jsonData = await response.json();
 
       setexistingBarcodes(
@@ -84,7 +74,7 @@ export default function AddItem() {
         }),
       };
       try {
-        await fetch("https://desolate-waters-26756.herokuapp.com/api/items", {
+        await fetch("http://localhost:5000/api/items", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -205,6 +195,7 @@ export default function AddItem() {
               Materials
             </label>
             <MySelect
+              class="h-9"
               value={values.select}
               onChange={setFieldValue}
               onBlur={setFieldTouched}
@@ -255,6 +246,7 @@ export default function AddItem() {
           isMulti
           backspaceRemovesValue
           closeMenuOnSelect={false}
+          blurInputOnSelect={false}
           theme={(theme) => ({
             ...theme,
             borderRadius: 0,

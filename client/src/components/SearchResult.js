@@ -11,23 +11,10 @@ const SearchResult = (props) => {
   const items = useSelector((state) => state.items);
   const selectedLocation = useSelector((state) => state.selectedLocation);
 
-  function Capitalize(string) {
-    const input = string.toLowerCase();
-    const words = input.split(" ");
-
-    for (let i = 0; i < words.length; i++) {
-      words[i] = words[i][0].toUpperCase() + words[i].substr(1);
-    }
-
-    return words.join(" ");
-  }
-
   useEffect(() => {
     const getItems = async () => {
       try {
-        const response = await fetch(
-          "https://desolate-waters-26756.herokuapp.com/api/items"
-        );
+        const response = await fetch("http://localhost:5000/api/items");
         const jsonData = await response.json();
 
         dispatch(setItems(jsonData));
@@ -61,7 +48,7 @@ const SearchResult = (props) => {
       return (
         <div className="h-9/12 ">
           {items.map((item) => (
-            <p key={uuidv4()}>{Capitalize(item)}</p>
+            <p key={uuidv4()}>{item}</p>
           ))}
         </div>
       );

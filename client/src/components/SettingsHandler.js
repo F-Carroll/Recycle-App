@@ -8,9 +8,7 @@ const SettingsHandler = () => {
 
   const getLocations = async () => {
     try {
-      const response = await fetch(
-        "https://desolate-waters-26756.herokuapp.com/api/locations"
-      );
+      const response = await fetch("http://localhost:5000/api/locations");
       const jsonData = await response.json();
 
       setLocations(jsonData);
