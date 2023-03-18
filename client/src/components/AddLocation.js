@@ -19,7 +19,7 @@ export default function AddLocation() {
 
   const getItems = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/locations");
+      const response = await fetch("/api/locations");
       const jsonData = await response.json();
 
       setexistingLocation(
@@ -58,7 +58,7 @@ export default function AddLocation() {
         }),
       };
       try {
-        await fetch("http://localhost:5000/api/locations", {
+        await fetch("/api/locations", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),

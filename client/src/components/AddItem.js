@@ -23,7 +23,7 @@ export default function AddItem() {
 
   const getItems = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/items");
+      const response = await fetch("/api/items");
       const jsonData = await response.json();
 
       setexistingBarcodes(
@@ -73,12 +73,14 @@ export default function AddItem() {
           return select.value;
         }),
       };
+      console.log(JSON.stringify(payload));
       try {
-        await fetch("http://localhost:5000/api/items", {
+        await fetch("/api/items", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
+
         window.location = "/";
       } catch (error) {
         console.error(error.message);
