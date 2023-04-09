@@ -214,7 +214,7 @@ export default function AddItem() {
           </div>
           <div className="w-full absolute bottom-0 text-center">
             <button
-              className="transition duration-300  ease-in-out w-2/3 self-center sm:w-2/5 bg-primary-blue p-2 rounded-md text-base font-semibold text-white focus:bg-primary-hoverblue"
+              className="transition duration-300  ease-in-out w-2/3 self-center sm:w-2/5 bg-primary-blue p-2 rounded-md text-base font-semibold text-white focus:bg-primary-hoverblue disabled:opacity-50"
               type="submit"
               disabled={isSubmitting}
             >

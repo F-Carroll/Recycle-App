@@ -181,7 +181,7 @@ export default function AddLocation() {
           <div className="w-full absolute bottom-0 text-center">
             <button
               type="submit"
-              className="transition duration-300  ease-in-out w-2/3 sm:w-2/5 bg-primary-blue p-2 rounded-md text-base font-semibold text-white focus:bg-primary-hoverblue"
+              className="transition duration-300  ease-in-out w-2/3 sm:w-2/5 bg-primary-blue p-2 rounded-md text-base font-semibold text-white focus:bg-primary-hoverblue disabled:opacity-50"
               disabled={isSubmitting}
             >
               Add Location
