@@ -7,7 +7,7 @@ const Dropdown = () => {
 
   const getLocations = async () => {
     try {
-      const response = await fetch("/api/locations");
+      const response = await fetch("/api/locations"); //fetches locations from database
       const jsonData = await response.json();
 
       setLocations(jsonData);
@@ -17,7 +17,7 @@ const Dropdown = () => {
   };
 
   useEffect(() => {
-    getLocations();
+    getLocations(); //calls function on page load
   }, []);
 
   const changeSelectOptionHandler = (event) => {

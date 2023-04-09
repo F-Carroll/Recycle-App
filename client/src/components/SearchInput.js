@@ -8,14 +8,14 @@ export default function SearchInput() {
 
   function handleOnSearch({ currentTarget = {} }) {
     const { value } = currentTarget;
-    dispatch(setQuery(value));
+    dispatch(setQuery(value)); //stores value of query to Redux store
   }
 
   return (
     <>
       <div className="w-full relative flex items-center  text-gray-400  focus-within:text-gray-700 transition duration-300 ease-in-out ">
         <input
-        id="search"
+          id="search"
           className="w-full bg-gray-100 p-2 rounded-md pl-10 focus:outline-none"
           autoComplete="off"
           placeholder="Search by barcode or product"

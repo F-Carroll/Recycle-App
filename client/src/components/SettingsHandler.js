@@ -8,7 +8,7 @@ const SettingsHandler = () => {
 
   const getLocations = async () => {
     try {
-      const response = await fetch("/api/locations");
+      const response = await fetch("/api/locations"); //fetch locations from database
       const jsonData = await response.json();
 
       setLocations(jsonData);
@@ -25,12 +25,12 @@ const SettingsHandler = () => {
     }
   }, []);
 
-  let type = null;
+  let type;
 
   let options = [];
 
   useEffect(() => {
-    dispatch(setSelectedLocation([options]));
+    dispatch(setSelectedLocation([options])); //sets selected location to an array of accepted recyclable items
   });
 
   locations.forEach((loc) => {
@@ -43,7 +43,6 @@ const SettingsHandler = () => {
     options = type;
   }
 
-  //check for location change
   return null;
 };
 

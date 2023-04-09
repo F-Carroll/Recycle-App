@@ -10,7 +10,7 @@ export default function AddLocation() {
   const selectoptions = [];
 
   options.optionsList.forEach((option) => {
-    selectoptions.push({ value: option, label: option });
+    selectoptions.push({ value: option, label: option }); //creates an array of select options for react select
   });
 
   function handleClose() {
@@ -19,12 +19,12 @@ export default function AddLocation() {
 
   const getItems = async () => {
     try {
-      const response = await fetch("/api/locations");
+      const response = await fetch("/api/locations"); //fetches locations from database
       const jsonData = await response.json();
 
       setexistingLocation(
         jsonData.map((item) => {
-          return item.location_name;
+          return item.location_name; //array of existing locations for form validation
         })
       );
     } catch (error) {
@@ -33,10 +33,10 @@ export default function AddLocation() {
   };
 
   useEffect(() => {
-    getItems();
+    getItems(); //calls function on page load
   }, []);
 
-  const formikEnhancer = withFormik({
+  const AddLocationForm = withFormik({
     validationSchema: Yup.object().shape({
       locationname: Yup.string()
         .min(3, "Location name is too short")
@@ -59,7 +59,7 @@ export default function AddLocation() {
       };
       try {
         await fetch("/api/locations", {
-          method: "POST",
+          method: "POST", //POST new location to API
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
@@ -73,28 +73,24 @@ export default function AddLocation() {
         setSubmitting(false);
       }, 1000);
     },
-    displayName: "MyForm",
+    displayName: "LocationForm",
   });
 
   const customStyles = {
     control: (base, state) => ({
       ...base,
-      background: "#F3F4F6",
       borderRadius: "8px",
       minHeight: "40px",
       cursor: "pointer",
-      borderColor: "none",
       borderWidth: "2px",
       width: "100%",
-      // eslint-disable-next-line
       borderColor: state.isFocused ? null : "#F3F4F6",
-      // eslint-disable-next-line
       background: state.isFocused ? "white" : "transition #F3F4F6",
       boxShadow: state.isFocused ? null : null,
     }),
   };
 
-  const MyForm = (props) => {
+  const LocationForm = (props) => {
     const {
       values,
       touched,
@@ -162,7 +158,7 @@ export default function AddLocation() {
             <label className="block uppercase tracking-wide text-primary-black text-xs font-bold mb-1.5">
               Materials
             </label>
-            <MySelect
+            <LocationSelectForm
               value={values.select}
               onChange={setFieldValue}
               onBlur={setFieldTouched}
@@ -192,7 +188,7 @@ export default function AddLocation() {
     );
   };
 
-  class MySelect extends React.Component {
+  class LocationSelectForm extends React.Component {
     handleChange = (value) => {
       this.props.onChange("select", value);
     };
@@ -213,6 +209,7 @@ export default function AddLocation() {
           isMulti
           backspaceRemovesValue
           closeMenuOnSelect={false}
+          blurInputOnSelect={false}
           theme={(theme) => ({
             ...theme,
             borderRadius: 0,
@@ -228,11 +225,11 @@ export default function AddLocation() {
     }
   }
 
-  const MyEnhancedForm = formikEnhancer(MyForm);
+  const Form = AddLocationForm(LocationForm);
 
   return (
     <>
-      <MyEnhancedForm />
+      <Form />
     </>
   );
 }

@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./assets/main.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 //Components
@@ -35,6 +35,7 @@ function App() {
         <Route path="/add/item" element={<AddItem />} />
 
         <Route path="/add/location" element={<AddLocation />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   );

@@ -9,7 +9,7 @@ const LocationSelector = () => {
 
   const getLocations = async () => {
     try {
-      const response = await fetch("/api/locations");
+      const response = await fetch("/api/locations"); //fetch locations from database
       const jsonData = await response.json();
 
       setLocations(jsonData);
@@ -20,7 +20,7 @@ const LocationSelector = () => {
 
   useEffect(() => {
     getLocations();
-    const data = localStorage.getItem("current selected location");
+    const data = localStorage.getItem("current selected location"); //get current selected location from local storage
     if (data) {
       setSelected(JSON.parse(data));
     }
@@ -28,7 +28,7 @@ const LocationSelector = () => {
 
   const changeSelectOptionHandler = (event) => {
     setSelected(event.target.value);
-    updateLocalStorageLocation(event.target.value);
+    updateLocalStorageLocation(event.target.value); //update local storage with new selected location
   };
 
   const updateLocalStorageLocation = (locationValue) => {
@@ -38,23 +38,23 @@ const LocationSelector = () => {
     );
   };
 
-  let type = null;
+  // let type = null;
 
-  let options = [];
+  // let options = [];
 
   useEffect(() => {
-    dispatch(setSelectedLocation(selected));
+    dispatch(setSelectedLocation(selected)); //stores selected location into redux store
   });
 
-  locations.forEach((loc) => {
-    if (selected === loc.location_name) {
-      type = loc.location_materials;
-    }
-  });
+  // locations.forEach((loc) => {
+  //   if (selected === loc.location_name) {
+  //     type = loc.location_materials;
+  //   }
+  // });
 
-  if (type) {
-    options = type;
-  }
+  // if (type) {
+  //   options = type;
+  // }
 
   return (
     <>
@@ -74,10 +74,13 @@ const LocationSelector = () => {
           className="pr-5 bg-gray-100 appearance-none border-2 rounded-md w-full border-gray-100 p-2 leading-tight truncate focus:outline-none focus:bg-white focus:border-gray-300"
           placeholder="Choose..."
           onChange={changeSelectOptionHandler}
-          value={selected}
+          value={selected || "default"}
         >
+          <option value="default" disabled>
+            Select a location
+          </option>
           {locations.map((loc) => (
-            <option key={loc.product_id} type={loc.location_materials}>
+            <option key={loc.location_id} type={loc.location_materials}>
               {loc.location_name}
             </option>
           ))}

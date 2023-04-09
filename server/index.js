@@ -3,10 +3,22 @@ const app = express();
 const cors = require("cors");
 const pool = require("./db");
 const path = require("path");
+const rateLimit = require("express-rate-limit");
 require("dotenv").config();
-//Middleware
-app.use(cors());
+//API rate limiter
+const generalLimit = rateLimit({
+  windowMs: 10 * 60 * 1000, //10 minutes
+  max: 200, //Maximum requests
+  message: [],
+});
+const strictLimit = rateLimit({
+  windowMs: 10 * 60 * 1000, //10 minutes
+  max: 5, //Maximum requests
+  message: [],
+});
+
 app.use(express.json());
+app.use("/api/", generalLimit);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
@@ -19,7 +31,7 @@ app.get(["/add/item", "/add/location", "/settings"], function (req, res) {
   res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });
 //create item
-app.post("/api/items", async (req, res) => {
+app.post("/api/items", generalLimit, async (req, res) => {
   try {
     const barcode = req.body.barcode;
     const product_name = req.body.product_name;
@@ -35,7 +47,7 @@ app.post("/api/items", async (req, res) => {
 });
 
 //get all items
-app.get("/api/items", async (req, res) => {
+app.get("/api/items", generalLimit, async (req, res) => {
   try {
     const allProducts = await pool.query("SELECT * FROM products");
     res.json(allProducts.rows);
@@ -45,7 +57,7 @@ app.get("/api/items", async (req, res) => {
 });
 
 //get an item
-app.get("/api/items/id/:id", async (req, res) => {
+app.get("/api/items/id/:id", generalLimit, async (req, res) => {
   try {
     const { id } = req.params;
     const product = await pool.query(
@@ -58,7 +70,7 @@ app.get("/api/items/id/:id", async (req, res) => {
 });
 
 //update an item
-app.put("/api/items/:id", async (req, res) => {
+app.put("/api/items/:id", strictLimit, async (req, res) => {
   try {
     const { id } = req.params;
     const barcode = req.body.barcode;
@@ -75,7 +87,7 @@ app.put("/api/items/:id", async (req, res) => {
 });
 
 //delete an item
-app.delete("/api/items/:id", async (req, res) => {
+app.delete("/api/items/:id", strictLimit, async (req, res) => {
   try {
     const { id } = req.params;
     const deleteProduct = await pool.query(
@@ -91,7 +103,7 @@ app.delete("/api/items/:id", async (req, res) => {
 
 //locations
 //create location
-app.post("/api/locations", async (req, res) => {
+app.post("/api/locations", generalLimit, async (req, res) => {
   try {
     const location_name = req.body.location_name;
     const location_materials = req.body.location_materials;
@@ -107,7 +119,7 @@ app.post("/api/locations", async (req, res) => {
 });
 
 //get all locations
-app.get("/api/locations", async (req, res) => {
+app.get("/api/locations", generalLimit, async (req, res) => {
   try {
     const allLocations = await pool.query("SELECT * FROM locations");
     res.json(allLocations.rows);
@@ -117,7 +129,7 @@ app.get("/api/locations", async (req, res) => {
 });
 
 //get a location
-app.get("/api/locations/id/:id", async (req, res) => {
+app.get("/api/locations/id/:id", generalLimit, async (req, res) => {
   try {
     const { id } = req.params;
     const location = await pool.query(
@@ -130,7 +142,7 @@ app.get("/api/locations/id/:id", async (req, res) => {
 });
 
 //update a location
-app.put("/api/locations/:id", async (req, res) => {
+app.put("/api/locations/:id", strictLimit, async (req, res) => {
   try {
     const { id } = req.params;
     const location_name = req.body.location_name;
@@ -147,7 +159,7 @@ app.put("/api/locations/:id", async (req, res) => {
 });
 
 //delete a location
-app.delete("/api/locations/:id", async (req, res) => {
+app.delete("/api/locations/:id", strictLimit, async (req, res) => {
   try {
     const { id } = req.params;
     const deleteProduct = await pool.query(

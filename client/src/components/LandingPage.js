@@ -5,10 +5,6 @@ export default function LandingPage() {
     <>
       <div className="flex flex-col py-2 mt-7">
         <div className="grid grid-cols-1 gap-4 mx-3 sm:grid-cols-2 max-w-3xl self-center">
-          <h1 className="text-3xl text-left font-bold sm:col-span-2">
-            Features
-          </h1>
-
           <div className="bg-gray-100 rounded-lg">
             <div className="flex flex-row m-3 self-center">
               <svg

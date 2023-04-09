@@ -38,9 +38,6 @@ export default function Settings() {
           </label>
           <LocationSelector />
         </div>
-        <div className="w-full absolute bottom-0 text-center">
-          <p className="text-gray-400">Version Details</p>
-        </div>
       </div>
     </div>
   );

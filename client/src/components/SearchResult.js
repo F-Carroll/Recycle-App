@@ -7,10 +7,11 @@ import NoResult from "./NoResult";
 
 const SearchResult = (props) => {
   const dispatch = useDispatch();
-  const query = useSelector((state) => state.query);
-  const items = useSelector((state) => state.items);
-  const selectedLocation = useSelector((state) => state.selectedLocation);
+  const query = useSelector((state) => state.query); //gets query value from Redux store
+  const items = useSelector((state) => state.items); //gets array of products from Redux store
+  const selectedLocation = useSelector((state) => state.selectedLocation); //gets array of accepted materials for recycling from Redux store
 
+  //fetch all items on render
   useEffect(() => {
     const getItems = async () => {
       try {
@@ -24,7 +25,7 @@ const SearchResult = (props) => {
     };
 
     getItems();
-    document.getElementById("search").focus();
+    document.getElementById("search").focus(); //focus search bar on render
   }, [dispatch]);
 
   const fuse = new Fuse(items, {
@@ -41,14 +42,14 @@ const SearchResult = (props) => {
     return <NoResult />;
   }
 
-  var arr2 = selectedLocation[0];
+  var acceptedItems = selectedLocation[0]; //gets array of accepted items from a nested array
 
   function RenderList({ items }) {
     if (items?.length) {
       return (
         <div className="h-9/12 ">
           {items.map((item) => (
-            <p key={uuidv4()}>{item}</p>
+            <p key={uuidv4()}>{item}</p> //renders items if they exist or else renders 'No items'
           ))}
         </div>
       );
@@ -64,8 +65,12 @@ const SearchResult = (props) => {
   return (
     <div className="flex flex-col mt-1">
       {itemResults.map((item) => {
-        const RecycleList = item.items.filter((item) => arr2.includes(item));
-        const WasteList = item.items.filter((item) => !arr2.includes(item));
+        const RecycleList = item.items.filter((item) =>
+          acceptedItems.includes(item)
+        ); //creates an array of items that are common to each products array of materials, and the acceptedItems array
+        const WasteList = item.items.filter(
+          (item) => !acceptedItems.includes(item)
+        ); //creates an array of items that are NOT common to each products array of materials, and the acceptedItems array
 
         return (
           <div

@@ -12,7 +12,7 @@ export default function AddItem() {
 
   options.optionsList.forEach((option) => {
     selectoptions.push({
-      value: option,
+      value: option, //creates an array of select options for react select
       label: option,
     });
   });
@@ -23,17 +23,17 @@ export default function AddItem() {
 
   const getItems = async () => {
     try {
-      const response = await fetch("/api/items");
+      const response = await fetch("/api/items"); //fetches items from database
       const jsonData = await response.json();
 
       setexistingBarcodes(
         jsonData.map((item) => {
-          return item.barcode;
+          return item.barcode; //array of existing barcodes for form validation
         })
       );
       setexistingProducts(
         jsonData.map((item) => {
-          return item.product_name;
+          return item.product_name; //array of existing products for form validation
         })
       );
     } catch (error) {
@@ -42,10 +42,10 @@ export default function AddItem() {
   };
 
   useEffect(() => {
-    getItems();
+    getItems(); //calls function on page load
   }, []);
 
-  const formikEnhancer = withFormik({
+  const AddItemForm = withFormik({
     validationSchema: Yup.object().shape({
       productname: Yup.string()
         .min(3, "Product name is too short")
@@ -73,10 +73,10 @@ export default function AddItem() {
           return select.value;
         }),
       };
-      console.log(JSON.stringify(payload));
+
       try {
         await fetch("/api/items", {
-          method: "POST",
+          method: "POST", //POST new item to API
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
@@ -91,28 +91,24 @@ export default function AddItem() {
         setSubmitting(false);
       }, 1000);
     },
-    displayName: "MyForm",
+    displayName: "ItemForm",
   });
 
   const customStyles = {
     control: (base, state) => ({
       ...base,
-      background: "#F3F4F6",
       borderRadius: "8px",
       minHeight: "40px",
       cursor: "pointer",
-      borderColor: "none",
       borderWidth: "2px",
       width: "100%",
-      // eslint-disable-next-line
       borderColor: state.isFocused ? null : "#F3F4F6",
-      // eslint-disable-next-line
       background: state.isFocused ? "white" : "transition #F3F4F6",
       boxShadow: state.isFocused ? null : null,
     }),
   };
 
-  const MyForm = (props) => {
+  const ItemForm = (props) => {
     const {
       values,
       touched,
@@ -196,7 +192,7 @@ export default function AddItem() {
             <label className="block uppercase tracking-wide text-primary-black text-xs font-bold mb-1.5">
               Materials
             </label>
-            <MySelect
+            <ItemsSelectForm
               class="h-9"
               value={values.select}
               onChange={setFieldValue}
@@ -226,7 +222,7 @@ export default function AddItem() {
     );
   };
 
-  class MySelect extends React.Component {
+  class ItemsSelectForm extends React.Component {
     handleChange = (value) => {
       this.props.onChange("select", value);
     };
@@ -264,11 +260,11 @@ export default function AddItem() {
     }
   }
 
-  const MyEnhancedForm = formikEnhancer(MyForm);
+  const Form = AddItemForm(ItemForm);
 
   return (
     <>
-      <MyEnhancedForm />
+      <Form />
     </>
   );
 }
